@@ -1,0 +1,31 @@
+#!/bin/sh
+
+#  backup_mysql.sh
+#  
+#
+#  Created by HSP SI Viet Nam on 6/27/14.
+#
+#mysqldump -u root -pHSPvps2013@ --add-drop-database --add-drop-table --all-databases > all.sql
+noidung="=========================================
+Ban Muon Lam Gi:
+=========================================
+1) Backup 1 Database	     3) Thoat
+2) Backup toan bo Databases"
+prompt='Nhap vao lua chon cua ban: '
+options=("Backup 1 Database" "Backup toan bo Databases")
+printf "=========================================\n"
+printf "Ban Muon Lam Gi:\n"
+printf "=========================================\n"
+PS3="$prompt"
+select opt in "${options[@]}" "Thoat"; do
+
+    case "$REPLY" in
+
+1 ) /usr/bin/backup_one_mysql; echo "$noidung";;
+2 ) /usr/bin/backup_all_mysql; echo "$noidung";;
+
+$(( ${#options[@]}+1 )) ) echo "Chao Tam Biet!"; break;;
+*) echo "Ban nhap sai, vui long nhap so theo so thu tu trong danh sach"; continue;;
+
+    esac
+done
